@@ -93,6 +93,7 @@ public class LoginController {
             String encryptPw = SHA256Util.getEncrypt(pw, salt);
             String encSalt = ARIA256Util.encrypted(salt, ARIA256Util.LOGIN_KEY);
 
+            // S3에서 사용하기 위한 AES-256으로 암호화 한 key
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(256, new SecureRandom());
             SecretKey tempKey = keyGenerator.generateKey();

@@ -17,21 +17,28 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    // 인증 정보 제공
     @Autowired
     private AuthenticationProvider authenticationProvider;
 
+    // 인증 성공 시 처리를 위한 Handler
     @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
 
+    // 인증 실패 시 처리를 위한 Handler
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
 
+    // 구성 환경 설정에 관한 설정을 하기 위한 메소드
+    // ex) resource, reject request 등
     @Override
     public void configure(WebSecurity web) throws Exception
     {
         web.ignoring().antMatchers("/css/**", "/script/**", "image/**", "/fonts/**", "lib/**");
     }
 
+    // Http 요청에 대해 resource level에서의 권한이나 정보를 제공하기 위한 메소드
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         log.info("security config.....");
@@ -39,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers("/", "/signup", "/test").permitAll()
+                .antMatchers("/", "/signup").permitAll()
                 .antMatchers("/board/**").hasRole("MEMBER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -62,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .disable();
 
+        // 세션 설정
         http.sessionManagement()
                 .maximumSessions(1)
                 .expiredUrl("/login1")
@@ -71,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.csrf().disable();
     }
 
+    // 인증 정보를 설정하기 위한 메소드
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);
