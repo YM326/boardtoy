@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+</head>
+<body>
+<form class="page-container" method="post" action="/login1">
+    <div class="login-form-container shadow">
+        <div class="login-form-right-side">
+            <div class="top-logo-wrap">
+
+            </div>
+            <h1>MIDAS IT</h1>
+            <p>Platform TFT</p>
+        </div>
+        <div class="login-form-left-side">
+            <div class="login-top-wrap">
+                <span>Don't have an account?</span>
+                <button type="button" class="create-account-btn shadow-light" onclick="location.href='signup'">Create Profile</button>
+            </div>
+            <div class="login-input-container">
+                <div class="login-input-wrap input-id">
+                    <i class="far fa-id-card"></i>
+                    <input placeholder="Id" type="text" name="id">
+                </div>
+                <div class="login-input-wrap input-password">
+                    <i class="fas fa-key"></i>
+                    <input placeholder="Password" type="password" name="pw">
+                </div>
+            </div>
+            <div class="login-btn-wrap">
+                <button class="login-btn">Login</button>
+                <a href="#" >Forgot password?</a>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

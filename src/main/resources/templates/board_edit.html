@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Read</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>Read</h1>
+
+        <form th:action="@{'/board/edit/' + ${boardDto.number}}" method="post" enctype="multipart/form-data">
+            <table border="1">
+                <input type="hidden" name="number" th:value="${boardDto.number}"/>
+                <input type="hidden" name="fileno" th:value="${file.fileno}"/>
+                <input type="hidden" name="date" th:value="${boardDto.date}"/>
+                <input type="hidden" name="path" th:value="${boardDto.path}"/>
+                <input type="hidden" name="hit" th:value="${boardDto.hit}"/>
+                <input type="hidden" name="boardno" th:value="${file.boardno}"/>
+                <input type="hidden" name="filename" th:value="${file.filename}"/>
+                <input type="hidden" name="fileoriname" th:value="${file.fileoriname}"/>
+                <input type="hidden" name="fileurl" th:value="${file.fileurl}"/>
+                <tr>
+                    <td>작성자</td>
+                    <td><input type="text" name="id" id="id" th:value="${boardDto.id}"/></td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td><input type="text" name="title" id="title" th:value="${boardDto.title}"/></td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td><textarea name="content" id="content" cols="30" rows="10" th:text="${boardDto.content}"></textarea></td>
+                </tr>
+                <tr>
+                    <td>첨부파일</td>
+                    <td>
+                        <a th:if="${boardDto.path} != ''" th:href="'/board/filedown/' + ${file.boardno}" th:text="${file.fileoriname}"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>등록일</td>
+                    <td th:text="${boardDto.date}"></td>
+                </tr>
+                <tr>
+                    <td>조회수</td>
+                    <td th:text="${boardDto.hit}"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input type="submit" value="글 수정"/>
+                        <input type="button" value="취소" th:onclick="'location.href=\'/board/read/' + ${boardDto.number} + '\''">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

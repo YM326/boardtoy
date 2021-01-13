@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Board List</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>Board List</h1>
+        <table border="2">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>조회수</th>
+                <th>수정일</th>
+            </tr>
+            <tr th:each="board : ${boardList}">
+                <th scope="row">
+                    <span th:text="${board.number}"></span>
+                </th>
+                <td>
+                    <a th:href="'/board/read/' + ${board.number}">
+                        <span th:text="${board.title}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${board.id}"></span>
+                </td>
+                <td>
+                    <span th:text="${board.hit}"></span>
+                </td>
+                <td>
+                    <span th:text="${board.date}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="Write" onclick="location.href='/board/write'">
+                </td>
+            </tr>
+        </table>
+        <input type="button" value="Logout" onclick="location.href='/logout'">
+    </body>
+</html>

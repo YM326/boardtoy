@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Read</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>Read</h1>
+
+        <form action="/board/read/${board.number}" method="post" enctype="multipart/form-data">
+            <table border="1">
+                <input type="hidden" name="number" th:value="${board.number}"/>
+                <tr>
+                    <td>작성자</td>
+                    <td th:text="${board.id}"></td>
+                </tr>
+                <tr>
+                    <td>제목</td>
+                    <td th:text="${board.title}"></td>
+                </tr>
+                <tr>
+                    <td>내용</td>
+                    <td th:text="${board.content}"></td>
+                </tr>
+                <tr>
+                    <td>첨부파일</td>
+                    <td>
+                        <a th:if="${board.path} != ''" th:href="'/board/filedown/' + ${file.boardno}" th:text="${file.fileoriname}"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>등록일</td>
+                    <td th:text="${board.date}"></td>
+                </tr>
+                <tr>
+                    <td>조회수</td>
+                    <td th:text="${board.hit}"></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <input type="button" value="목록" onclick="location.href='/board'">
+                        <input type="button" value="글 수정" th:onclick="'location.href=\'/board/edit/' + ${board.number} + '\''"></input>
+                        <input type="button" value="글 삭제" th:onclick="'location.href=\'/board/delete/' + ${board.number} + '\''">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
