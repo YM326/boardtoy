@@ -9,6 +9,7 @@ import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.FileService;
 import com.example.demo.service.S3Service;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Controller
 @EnableAutoConfiguration
 public class BoardController {
@@ -84,6 +86,7 @@ public class BoardController {
             String saveName = "test/" + uuid + "_" + attachfile.getOriginalFilename();
             String sseKey = (String)session.getAttribute("sseKey");
             String fileUrl = s3Service.upload(attachfile, saveName, sseKey);
+
             if (saveName != null && !saveName.equals("")) {
                 FileEntity fileEntity = FileEntity.builder().boardno(lastBoard.getNumber()).filename(saveName)
                         .fileoriname(attachfile.getOriginalFilename()).fileurl(fileUrl).build();
@@ -96,6 +99,7 @@ public class BoardController {
 
     @GetMapping("/board/read/{number}")
     public String boardread(@PathVariable(value="number") int number, Model model){
+        log.info("테스트");
         BoardEntity boardEntity = boardRepository.findById(number).orElse(new BoardEntity());
         FileEntity fileEntity = fileRepository.findByBoardno(number);
 

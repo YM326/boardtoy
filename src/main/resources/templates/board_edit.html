@@ -33,6 +33,7 @@
                 <tr>
                     <td>첨부파일</td>
                     <td>
+                        <input type="file" name = "attachfile"/>
                         <a th:if="${boardDto.path} != ''" th:href="'/board/filedown/' + ${file.boardno}" th:text="${file.fileoriname}"></a>
                     </td>
                 </tr>

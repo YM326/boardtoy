@@ -1,12 +1,14 @@
 package com.example.demo.entity;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+@Slf4j
 @NoArgsConstructor
 @Entity
 @Table(name = "board")

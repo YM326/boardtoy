@@ -7,6 +7,7 @@ import com.example.demo.util.SHA256Util;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,9 @@ public class LoginController {
 
     @Autowired
     Login2Repository loginRepository;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String loginpage(){
@@ -126,7 +130,27 @@ public class LoginController {
         String enc = ARIA256Util.encrypted(test, ARIA256Util.LOGIN_KEY);
         String dec = ARIA256Util.decrypted(enc, ARIA256Util.LOGIN_KEY);
 
-        return "원본 : " + test + "ENC = " + enc + ", DNC = " + dec;
+        return "원본 : " + test + ", ENC = " + enc + ", DNC = " + dec;
+//        return "Hello";
+    }
+
+    @GetMapping("/test1")
+    public @ResponseBody String test(){
+        String message = "bcrypt암호화";
+
+        String enc = passwordEncoder.encode(message);
+        String enc1 = passwordEncoder.encode(message);
+
+        String sMatch = "불일치", sMatch1 = "불일치";
+        boolean bMatch = passwordEncoder.matches(message, enc);
+        boolean bMatch1 = passwordEncoder.matches(message, enc1);
+        if(bMatch)
+            sMatch = "일치";
+
+        if(bMatch1)
+            sMatch1 = "일치";
+
+        return "원본 : " + message + " Encrypt = " + enc + "       일치 여부 : " + sMatch + ", " + sMatch1;
 //        return "Hello";
     }
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>웹 소켓 채팅 테스트</title>
+</head>
+<body>
+<h1>웹 소켓을 사용한 채팅방입니다.</h1>
+<div id="chatConnect">
+    <button onclick="connectSocket()">채팅 시작하기</button>
+</div>
+<div id="chat" hidden="hidden">
+    <input id="message"></input>
+    <button id="sendBtn">전송</button>
+    <div id="chatBox"></div>
+</div>
+<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var webSocket;
+
+    function connectSocket() {
+        webSocket = new WebSocket('ws://' + location.host + '/chating');
+        webSocket.onmessage = (data => {
+            $("<p>"+data.data+"</p>").prependTo('#chatBox');
+        });
+        $('#chatConnect').hide();
+        $('#chat').show();
+    }
+
+    function sendMessage() {
+        webSocket.send($("#message").val());
+        $('#message').val("");
+    }
+
+    $("#message").keyup(e => { if (e.keyCode == 13) sendMessage() });
+    $("#sendBtn").click(()=> {sendMessage()});
+
+</script>
+</body>
+</html>
